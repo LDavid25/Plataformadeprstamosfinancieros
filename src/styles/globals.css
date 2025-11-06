@@ -202,6 +202,7 @@
 
 html {
   font-size: var(--font-size);
+  scroll-behavior: smooth;
 }
 
 /* Custom scrollbar for dark theme */
@@ -230,4 +231,20 @@ html {
 
 .glow-primary-strong {
   box-shadow: 0 0 30px rgba(233, 82, 30, 0.5), 0 0 60px rgba(233, 82, 30, 0.2);
+}
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image: linear-gradient(rgba(233, 82, 30, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233, 82, 30, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Smooth transitions for interactive elements */
+@layer utilities {
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
 }
