@@ -4,11 +4,53 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useLoan } from '../context/LoanContext';
-import { Briefcase } from 'lucide-react';
+import { Briefcase, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Button } from './ui/button';
 
 export const EmploymentInfoForm: React.FC = () => {
-  const { applicationData, updateEmploymentInfo } = useLoan();
+  const { applicationData, updateEmploymentInfo, setCurrentStep } = useLoan();
   const { employmentInfo } = applicationData;
+
+  const handleNext = () => {
+    console.log('handleNext llamado');
+    console.log('employmentInfo:', employmentInfo);
+    
+    // Validar campos requeridos
+    if (!employmentInfo.employmentType) {
+      console.log('Falta employmentType');
+      alert('Por favor selecciona el tipo de empleo');
+      return;
+    }
+    if (employmentInfo.yearsEmployed === undefined) {
+      console.log('Falta yearsEmployed');
+      alert('Por favor ingresa la antigüedad laboral');
+      return;
+    }
+    if (!employmentInfo.company) {
+      console.log('Falta company');
+      alert('Por favor ingresa el nombre de la empresa o actividad');
+      return;
+    }
+    if (!employmentInfo.sector) {
+      console.log('Falta sector');
+      alert('Por favor selecciona el sector económico');
+      return;
+    }
+    if (!employmentInfo.incomeStability) {
+      console.log('Falta incomeStability');
+      alert('Por favor selecciona la estabilidad de ingresos');
+      return;
+    }
+    
+    console.log('Todos los campos están completos, avanzando al paso 5');
+    // Llamar a setCurrentStep para avanzar al siguiente paso
+    // La lógica de evaluación se manejará en AppContent
+    setCurrentStep(5);
+  };
+
+  const handleBack = () => {
+    setCurrentStep(3); // Volver a Información Financiera
+  };
 
   return (
     <Card className="border-primary/20">
@@ -127,6 +169,23 @@ export const EmploymentInfoForm: React.FC = () => {
             <li>Declaración de impuestos (si aplica)</li>
             <li>Estados de cuenta bancarios</li>
           </ul>
+        </div>
+        <div className="flex justify-between pt-6 border-t border-border mt-6">
+          <Button 
+            variant="outline" 
+            onClick={handleBack}
+            className="gap-1"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Atrás
+          </Button>
+          <Button 
+            onClick={handleNext}
+            className="gap-1"
+          >
+            Ver Resultado
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
       </CardContent>
     </Card>

@@ -4,11 +4,26 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useLoan } from '../context/LoanContext';
-import { User } from 'lucide-react';
+import { User, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Button } from './ui/button';
 
 export const PersonalInfoForm: React.FC = () => {
-  const { applicationData, updatePersonalInfo } = useLoan();
+  const { applicationData, updatePersonalInfo, setCurrentStep } = useLoan();
   const { personalInfo } = applicationData;
+
+  const handleNext = () => {
+    // Validar campos requeridos
+    if (!personalInfo.firstName || !personalInfo.lastName || !personalInfo.age || 
+        !personalInfo.idNumber || !personalInfo.email || !personalInfo.phone) {
+      alert('Por favor completa todos los campos requeridos');
+      return;
+    }
+    setCurrentStep(3); // Ir a Información Financiera
+  };
+
+  const handleBack = () => {
+    setCurrentStep(1); // Volver a la calculadora
+  };
 
   return (
     <Card className="border-primary/20">
@@ -138,6 +153,23 @@ export const PersonalInfoForm: React.FC = () => {
             required
             className="bg-input-background border-primary/20 focus:border-primary"
           />
+        </div>
+        <div className="flex justify-between pt-6 border-t border-border mt-6">
+          <Button 
+            variant="outline" 
+            onClick={handleBack}
+            className="gap-1"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Atrás
+          </Button>
+          <Button 
+            onClick={handleNext}
+            className="gap-1"
+          >
+            Siguiente
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
       </CardContent>
     </Card>

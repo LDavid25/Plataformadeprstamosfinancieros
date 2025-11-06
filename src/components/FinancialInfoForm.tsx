@@ -3,12 +3,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { useLoan } from '../context/LoanContext';
-import { DollarSign, TrendingDown, Wallet, CreditCard } from 'lucide-react';
+import { DollarSign, TrendingDown, Wallet, CreditCard, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Button } from './ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 export const FinancialInfoForm: React.FC = () => {
-  const { applicationData, updateFinancialInfo } = useLoan();
+  const { applicationData, updateFinancialInfo, setCurrentStep } = useLoan();
   const { financialInfo } = applicationData;
+
+  const handleNext = () => {
+    // Validar campos requeridos
+    if (!financialInfo.monthlyIncome || !financialInfo.monthlyExpenses) {
+      alert('Por favor completa todos los campos requeridos');
+      return;
+    }
+    setCurrentStep(4); // Ir a Información Laboral
+  };
+
+  const handleBack = () => {
+    setCurrentStep(2); // Volver a Información Personal
+  };
 
   return (
     <Card className="border-primary/20">
@@ -196,6 +210,23 @@ export const FinancialInfoForm: React.FC = () => {
               </span>
             </div>
           </div>
+        </div>
+        <div className="flex justify-between pt-6 border-t border-border mt-6">
+          <Button 
+            variant="outline" 
+            onClick={handleBack}
+            className="gap-1"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Atrás
+          </Button>
+          <Button 
+            onClick={handleNext}
+            className="gap-1"
+          >
+            Siguiente
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
       </CardContent>
     </Card>
