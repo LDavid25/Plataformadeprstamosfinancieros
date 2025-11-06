@@ -257,12 +257,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                 Plataforma Líder en Créditos Empresariales
               </Badge>
               
-              <h1 className="text-6xl md:text-7xl mb-6 text-foreground">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-foreground leading-tight tracking-tight">
                 Tu crédito ideal,{' '}
                 <span className="text-primary">a un clic</span>
               </h1>
               
-              <p className="text-2xl text-muted-foreground mb-8 max-w-2xl">
+              <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 max-w-2xl leading-relaxed font-light">
                 Precalifícate en minutos. Proceso 100% digital con las mejores tasas del mercado.
               </p>
 
