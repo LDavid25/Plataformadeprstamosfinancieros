@@ -4,16 +4,16 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Servir archivos estáticos
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static('build'));
 
-// Ruta para manejar todas las solicitudes GET
-app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'), (err) => {
-    if (err) {
-      console.error('Error al cargar el archivo:', err);
-      res.status(500).send('Error al cargar la aplicación');
-    }
-  });
+// Ruta de prueba
+app.get('/api/test', (req, res) => {
+  res.json({ status: 'ok', message: 'API funcionando' });
+});
+
+// Todas las demás rutas sirven el index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
 // Manejador de errores
@@ -22,6 +22,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('¡Algo salió mal!');
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
