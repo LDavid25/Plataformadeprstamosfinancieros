@@ -84,8 +84,8 @@ export const ChatBot: React.FC = () => {
   }
 
   return (
-    <Card className="fixed bottom-6 right-6 w-96 shadow-2xl border-primary/30 glow-primary">
-      <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-primary to-accent text-white rounded-t-lg">
+    <Card className="fixed bottom-6 right-6 w-96 shadow-2xl border-primary/30 glow-primary z-[99999]">
+      <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-primary to-accent text-white rounded-t-lg z-[99999]">
         <CardTitle className="text-lg">Asistente Virtual</CardTitle>
         <Button
           variant="ghost"
@@ -97,7 +97,7 @@ export const ChatBot: React.FC = () => {
         </Button>
       </CardHeader>
       <CardContent className="p-0">
-        <ScrollArea className="h-96 p-4 bg-card">
+        <ScrollArea className="h-96 p-4 bg-black text-white">
           <div className="space-y-4">
             {messages.map((message) => (
               <div
@@ -107,7 +107,7 @@ export const ChatBot: React.FC = () => {
                 <div
                   className={`max-w-[80%] rounded-lg p-3 ${
                     message.isBot
-                      ? 'bg-secondary text-foreground border border-border'
+                      ? 'bg-gray-800 text-white border border-gray-700'
                       : 'bg-primary text-white shadow-lg shadow-primary/30'
                   }`}
                 >

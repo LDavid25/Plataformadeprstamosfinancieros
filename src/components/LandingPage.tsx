@@ -691,8 +691,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
             {/* Company Info */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Building2 className="h-6 w-6 text-primary" />
+                <div className="p-2">
+                  <img 
+                    src="/BANX_curvas.jpg" 
+                    alt="Logo Banx" 
+                    className="h-12 w-32"
+                  />
                 </div>
                 <h3>Créditos Banx</h3>
               </div>
