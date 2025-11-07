@@ -3,11 +3,11 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Servir archivos estáticos de la carpeta 'build' (configurada en vite.config.ts)
+// Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Manejar todas las rutas para SPA
-app.get('/*', (req, res) => {
+// Ruta para manejar todas las solicitudes GET
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'), (err) => {
     if (err) {
       console.error('Error al cargar el archivo:', err);
