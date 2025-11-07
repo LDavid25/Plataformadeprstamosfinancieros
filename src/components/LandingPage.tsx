@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { 
-  Building2, 
-  Shield, 
-  Zap, 
-  Clock, 
-  Users, 
+import {
+  Building2,
+  Shield,
+  Zap,
+  Clock,
+  Users,
   TrendingUp,
   Calculator,
   FileText,
@@ -256,12 +256,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                 <Zap className="h-4 w-4 mr-2" />
                 Plataforma Líder en Créditos Empresariales
               </Badge>
-              
+
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-foreground leading-tight tracking-tight">
                 Tu crédito ideal,{' '}
                 <span className="text-primary">a un clic</span>
               </h1>
-              
+
               <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 max-w-2xl leading-relaxed font-light">
                 Precalifícate en minutos. Proceso 100% digital con las mejores tasas del mercado.
               </p>
@@ -272,8 +272,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                 >
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     className="gap-2 glow-primary text-lg px-8 py-6"
                     onClick={onStartApplication}
                   >
@@ -286,8 +286,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5, duration: 0.5 }}
                 >
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     variant="outline"
                     className="border-primary/30 hover:bg-primary/10 text-lg px-8 py-6"
                     onClick={scrollToCalculator}
@@ -360,7 +360,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
           <Tabs defaultValue="personal" className="w-full">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-12 bg-card border border-border h-auto">
               {creditLines.map((line) => (
-                <TabsTrigger 
+                <TabsTrigger
                   key={line.id}
                   value={line.id}
                   className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3"
@@ -416,7 +416,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                         ))}
                       </div>
 
-                      <Button 
+                      <Button
                         className="w-full gap-2 glow-primary"
                         size="lg"
                         onClick={onStartApplication}
@@ -583,8 +583,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                       </div>
                     </motion.div>
 
-                    <Button 
-                      className="w-full gap-2 glow-primary" 
+                    <Button
+                      className="w-full gap-2 glow-primary"
                       size="lg"
                       onClick={onStartApplication}
                     >
@@ -669,8 +669,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
             <p className="text-xl text-muted-foreground mb-8">
               Solo necesitas tu RFC y CIEC. Proceso 100% digital y seguro.
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="gap-2 glow-primary-strong text-lg px-12 py-6"
               onClick={onStartApplication}
             >
@@ -691,10 +691,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
             {/* Company Info */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Building2 className="h-6 w-6 text-primary" />
+                <div className="h-12 w-32 relative">
+                  <img
+                    src="/img/BANX-1_2x.png"
+                    alt="Logo Banx"
+                    className="h-full w-full object-contain"
+                  />
                 </div>
-                <h3>Créditos Banx</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Líderes en soluciones financieras para personas y empresas.

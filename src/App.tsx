@@ -111,8 +111,12 @@ const AppContent: React.FC = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg glow-primary">
-                <Building2 className="h-8 w-8 text-primary" />
+              <div className="h-12 w-32 relative">
+                <img 
+                  src="/img/BANX-1_2x.png" 
+                  alt="Logo Banx" 
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-2xl text-foreground">Créditos Banx</h1>
