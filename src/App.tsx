@@ -3,21 +3,18 @@ import { LoanProvider, useLoan } from './context/LoanContext';
 import { LandingPage } from './components/LandingPage';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { PersonalInfoForm } from './components/PersonalInfoForm';
-import { FinancialInfoForm } from './components/FinancialInfoForm';
-import { EmploymentInfoForm } from './components/EmploymentInfoForm';
-import { EvaluationResult } from './components/EvaluationResult';
+import { PrerequisiteForm } from './components/PrerequisiteForm';
+import { SubmissionSuccess } from './components/SubmissionSuccess';
 import { ChatBot } from './components/ChatBot';
 import { Button } from './components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './components/ui/sheet';
-import { evaluateLoanApplication } from './utils/loanCalculations';
 import { Building2, ArrowRight, ArrowLeft, X } from 'lucide-react';
 import { Toaster, toast } from 'sonner@2.0.3';
 
 const STEPS = [
   { id: 1, title: 'Información Personal', description: 'Datos básicos' },
-  { id: 2, title: 'Información Financiera', description: 'Situación económica' },
-  { id: 3, title: 'Información Laboral', description: 'Datos laborales' },
-  { id: 4, title: 'Resultado', description: 'Evaluación' },
+  { id: 2, title: 'Prerequisitos', description: 'RFC y CIEC' },
+  { id: 3, title: 'Confirmación', description: 'Envío exitoso' },
 ];
 
 const AppContent: React.FC = () => {
@@ -56,24 +53,12 @@ const AppContent: React.FC = () => {
     );
   };
 
-  const validateFinancialInfo = () => {
-    const { financialInfo } = applicationData;
+  const validatePrerequisites = () => {
+    const { prerequisiteInfo } = applicationData;
     return !!(
-      financialInfo.monthlyIncome &&
-      financialInfo.monthlyExpenses !== undefined &&
-      financialInfo.assets !== undefined &&
-      financialInfo.existingDebts !== undefined
-    );
-  };
-
-  const validateEmploymentInfo = () => {
-    const { employmentInfo } = applicationData;
-    return !!(
-      employmentInfo.employmentType &&
-      employmentInfo.yearsEmployed !== undefined &&
-      employmentInfo.company &&
-      employmentInfo.sector &&
-      employmentInfo.incomeStability
+      prerequisiteInfo.rfc &&
+      prerequisiteInfo.ciec &&
+      prerequisiteInfo.creditType
     );
   };
 
@@ -90,29 +75,14 @@ const AppContent: React.FC = () => {
         return;
       }
       setCurrentStep(2);
-      toast.info('Ingresa tu información financiera');
+      toast.info('Ingresa tus prerequisitos');
     } else if (currentStep === 2) {
-      if (!validateFinancialInfo()) {
+      if (!validatePrerequisites()) {
         toast.error('Por favor completa todos los campos requeridos');
         return;
       }
       setCurrentStep(3);
-      toast.info('Casi terminamos, información laboral');
-    } else if (currentStep === 3) {
-      if (!validateEmploymentInfo()) {
-        toast.error('Por favor completa todos los campos requeridos');
-        return;
-      }
-      // Evaluate the application
-      const result = evaluateLoanApplication(
-        applicationData.personalInfo,
-        applicationData.financialInfo,
-        applicationData.employmentInfo,
-        applicationData.loanData
-      );
-      setEvaluationResult(result);
-      setCurrentStep(4);
-      toast.success('¡Evaluación completada!');
+      toast.success('¡Solicitud enviada con éxito!');
     }
   };
 
@@ -167,7 +137,7 @@ const AppContent: React.FC = () => {
       {/* Application Sheet - Slides from right */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetContent 
-          className="w-full sm:max-w-2xl overflow-y-auto"
+          className="w-full sm:max-w-3xl lg:max-w-4xl overflow-y-auto"
           onInteractOutside={(e) => {
             // Prevent closing when clicking outside if there's unsaved data
             if (currentStep > 1) {
@@ -176,7 +146,7 @@ const AppContent: React.FC = () => {
             }
           }}
         >
-          <SheetHeader className="mb-6">
+          <SheetHeader className="mb-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-lg">
@@ -192,20 +162,19 @@ const AppContent: React.FC = () => {
             </div>
           </SheetHeader>
 
-          {currentStep !== 4 && (
-            <div className="mb-8">
+          {currentStep !== 3 && (
+            <div className="mb-10">
               <ProgressIndicator currentStep={currentStep} steps={STEPS} />
             </div>
           )}
 
           <div>
             {currentStep === 1 && <PersonalInfoForm />}
-            {currentStep === 2 && <FinancialInfoForm />}
-            {currentStep === 3 && <EmploymentInfoForm />}
-            {currentStep === 4 && <EvaluationResult />}
+            {currentStep === 2 && <PrerequisiteForm />}
+            {currentStep === 3 && <SubmissionSuccess />}
 
             {/* Navigation Buttons */}
-            {currentStep !== 4 ? (
+            {currentStep !== 3 ? (
               <div className="flex gap-4 mt-8">
                 {currentStep > 1 && (
                   <Button
@@ -223,7 +192,7 @@ const AppContent: React.FC = () => {
                   size="lg"
                   className="flex-1 gap-2 glow-primary"
                 >
-                  {currentStep === 3 ? 'Evaluar Solicitud' : 'Siguiente'}
+                  {currentStep === 2 ? 'Enviar Solicitud' : 'Siguiente'}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>

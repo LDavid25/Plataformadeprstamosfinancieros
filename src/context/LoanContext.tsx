@@ -17,6 +17,12 @@ export interface PersonalInfo {
   phone: string;
 }
 
+export interface PrerequisiteInfo {
+  rfc: string;
+  ciec: string;
+  creditType: string;
+}
+
 export interface FinancialInfo {
   monthlyIncome: number;
   monthlyExpenses: number;
@@ -36,6 +42,7 @@ export interface EmploymentInfo {
 export interface ApplicationData {
   loanData: LoanData;
   personalInfo: Partial<PersonalInfo>;
+  prerequisiteInfo: Partial<PrerequisiteInfo>;
   financialInfo: Partial<FinancialInfo>;
   employmentInfo: Partial<EmploymentInfo>;
   currentStep: number;
@@ -51,6 +58,7 @@ interface LoanContextType {
   applicationData: ApplicationData;
   updateLoanData: (data: Partial<LoanData>) => void;
   updatePersonalInfo: (data: Partial<PersonalInfo>) => void;
+  updatePrerequisiteInfo: (data: Partial<PrerequisiteInfo>) => void;
   updateFinancialInfo: (data: Partial<FinancialInfo>) => void;
   updateEmploymentInfo: (data: Partial<EmploymentInfo>) => void;
   setCurrentStep: (step: number) => void;
@@ -67,6 +75,7 @@ const initialState: ApplicationData = {
     interestRate: 8.5,
   },
   personalInfo: {},
+  prerequisiteInfo: {},
   financialInfo: {},
   employmentInfo: {},
   currentStep: 0,
@@ -86,6 +95,13 @@ export const LoanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setApplicationData(prev => ({
       ...prev,
       personalInfo: { ...prev.personalInfo, ...data },
+    }));
+  };
+
+  const updatePrerequisiteInfo = (data: Partial<PrerequisiteInfo>) => {
+    setApplicationData(prev => ({
+      ...prev,
+      prerequisiteInfo: { ...prev.prerequisiteInfo, ...data },
     }));
   };
 
@@ -121,6 +137,7 @@ export const LoanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         applicationData,
         updateLoanData,
         updatePersonalInfo,
+        updatePrerequisiteInfo,
         updateFinancialInfo,
         updateEmploymentInfo,
         setCurrentStep,
