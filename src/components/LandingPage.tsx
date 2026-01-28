@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import {
   Building2,
   Shield,
@@ -194,7 +195,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
     {
       name: 'María González',
       role: 'Emprendedora',
-      content: 'Gracias a Créditos Banx pude expandir mi negocio. El proceso fue rápido y transparente.',
+      content: 'Gracias a Créditos Banx not Banks pude expandir mi negocio. El proceso fue rápido y transparente.',
       rating: 5,
       image: 'https://images.unsplash.com/photo-1647884866497-0bacd3f9e388?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGJ1c2luZXNzJTIwcGVyc29ufGVufDF8fHx8MTc2MjQyMTk0OXww&ixlib=rb-4.1.0&q=80&w=1080'
     },
@@ -263,7 +264,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
               </h1>
 
               <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 max-w-2xl leading-relaxed font-light">
-                Precalifícate en minutos. Proceso 100% digital con las mejores tasas del mercado.
+                Precalifícate en minutos. Proceso 100% digital con las mejores garantías alternativas a las que estás acostumbrado.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -297,191 +298,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                 </motion.div>
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Ventajas Section */}
-      <section className="py-20 bg-card/50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl mb-4">¿Por qué Créditos Banx?</h2>
-            <p className="text-xl text-muted-foreground">
-              La confianza de miles de clientes nos respalda
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {advantages.map((advantage, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-              >
-                <Card className="h-full hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/20 hover:scale-105">
-                  <CardHeader className="text-center">
-                    <div className="mx-auto p-4 bg-primary/10 rounded-full w-fit mb-4">
-                      <advantage.icon className="h-8 w-8 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">{advantage.title}</CardTitle>
-                    <CardDescription>{advantage.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Líneas de Crédito Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl mb-4">Líneas de Crédito Banx</h2>
-            <p className="text-xl text-muted-foreground">
-              Soluciones financieras para cada necesidad
-            </p>
-          </motion.div>
-
-          <Tabs defaultValue="personal" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-12 bg-card border border-border h-auto">
-              {creditLines.map((line) => (
-                <TabsTrigger
-                  key={line.id}
-                  value={line.id}
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3"
-                >
-                  <line.icon className="h-4 w-4 mr-2" />
-                  <span className="hidden md:inline">{line.title}</span>
-                  <span className="md:hidden">{line.title.split(' ')[0]}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            {creditLines.map((line) => (
-              <TabsContent key={line.id} value={line.id}>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <Card className="border-primary/20">
-                    <CardHeader>
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 bg-primary/10 rounded-lg">
-                          <line.icon className={`h-10 w-10 ${line.color}`} />
-                        </div>
-                        <div className="flex-1">
-                          <CardTitle className="text-2xl mb-2">{line.title}</CardTitle>
-                          <CardDescription className="text-lg">{line.description}</CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid md:grid-cols-3 gap-6 mb-8">
-                        <div className="p-4 bg-card border border-border rounded-lg">
-                          <p className="text-sm text-muted-foreground mb-1">Monto</p>
-                          <p className="text-2xl text-primary">{line.amount}</p>
-                        </div>
-                        <div className="p-4 bg-card border border-border rounded-lg">
-                          <p className="text-sm text-muted-foreground mb-1">Tasa</p>
-                          <p className="text-2xl text-accent">{line.rate}</p>
-                        </div>
-                        <div className="p-4 bg-card border border-border rounded-lg">
-                          <p className="text-sm text-muted-foreground mb-1">Plazo</p>
-                          <p className="text-2xl text-foreground">{line.term}</p>
-                        </div>
-                      </div>
-
-                      <div className="grid md:grid-cols-2 gap-4 mb-6">
-                        {line.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-2">
-                            <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <Button
-                        className="w-full gap-2 glow-primary"
-                        size="lg"
-                        onClick={onStartApplication}
-                      >
-                        Solicitar este crédito
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Proceso Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl mb-4 text-foreground">Proceso Banx</h2>
-            <p className="text-xl text-muted-foreground">
-              3 simples pasos para obtener tu crédito
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className="relative"
-              >
-                <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-all">
-                  <CardHeader className="text-center">
-                    <div className="mx-auto mb-4">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl"></div>
-                        <div className="relative p-6 bg-primary/10 rounded-full border-2 border-primary">
-                          <step.icon className="h-12 w-12 text-primary" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-5xl text-primary mb-4">{step.step}</div>
-                    <CardTitle className="text-xl mb-2">{step.title}</CardTitle>
-                    <CardDescription>{step.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-                {index < processSteps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-20">
-                    <ArrowRight className="h-8 w-8 text-primary" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
@@ -591,10 +407,201 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                       Solicitar este crédito
                       <ArrowRight className="h-4 w-4" />
                     </Button>
+                    <p className="text-xs text-muted-foreground text-center mt-2">
+                      * El monto a pagar mostrado es informativo y puede variar según el análisis de crédito.
+                    </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Ventajas Section */}
+      <section className="py-20 bg-card/50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl mb-4">¿Por qué Créditos Banx not Banks?</h2>
+            <p className="text-xl text-muted-foreground">
+              La confianza de miles de clientes nos respalda
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {advantages.map((advantage, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+              >
+                <Card className="h-full hover:border-primary/40 transition-all hover:shadow-lg hover:shadow-primary/20 hover:scale-105">
+                  <CardHeader className="text-center">
+                    <div className="mx-auto p-4 bg-primary/10 rounded-full w-fit mb-4">
+                      <advantage.icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <CardTitle className="text-lg">{advantage.title}</CardTitle>
+                    <CardDescription>{advantage.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Líneas de Crédito Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl mb-4">Líneas de Crédito Banx not Banks</h2>
+            <p className="text-xl text-muted-foreground">
+              Soluciones financieras para cada necesidad
+            </p>
+          </motion.div>
+
+          <Tabs defaultValue="personal" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-12 bg-card border border-border h-auto">
+              {creditLines.map((line) => (
+                <TabsTrigger
+                  key={line.id}
+                  value={line.id}
+                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground py-3"
+                >
+                  <line.icon className="h-4 w-4 mr-2" />
+                  <span className="hidden md:inline">{line.title}</span>
+                  <span className="md:hidden">{line.title.split(' ')[0]}</span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {creditLines.map((line) => (
+              <TabsContent key={line.id} value={line.id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <Card className="border-primary/20">
+                    <CardHeader>
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 bg-primary/10 rounded-lg">
+                          <line.icon className={`h-10 w-10 ${line.color}`} />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-2xl mb-2">{line.title}</CardTitle>
+                          <CardDescription className="text-lg">{line.description}</CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid md:grid-cols-3 gap-6 mb-8">
+                        <div className="p-4 bg-card border border-border rounded-lg">
+                          <p className="text-sm text-muted-foreground mb-1">Monto</p>
+                          <p className="text-2xl text-primary">{line.amount}</p>
+                        </div>
+                        <div className="p-4 bg-card border border-border rounded-lg">
+                          <p className="text-sm text-muted-foreground mb-1">Tasa</p>
+                          <p className="text-2xl text-accent">{line.rate}</p>
+                        </div>
+                        <div className="p-4 bg-card border border-border rounded-lg">
+                          <p className="text-sm text-muted-foreground mb-1">Plazo</p>
+                          <p className="text-2xl text-foreground">{line.term}</p>
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4 mb-6">
+                        {line.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Button
+                        className="w-full gap-2 glow-primary"
+                        size="lg"
+                        onClick={onStartApplication}
+                      >
+                        Solicitar este crédito
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                      <p className="text-xs text-muted-foreground text-center mt-2">
+                        * El monto a pagar mostrado es informativo y puede variar según el análisis de crédito.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </TabsContent>
+            ))}
+          </Tabs>
+        </div>
+      </section>
+
+      {/* Proceso Section */}
+      <section className="py-20 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl mb-4 text-foreground">Proceso Banx not Banks</h2>
+            <p className="text-xl text-muted-foreground">
+              3 simples pasos para obtener tu crédito
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {processSteps.map((step, index) => (
+              <motion.div
+                key={step.step}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className="relative"
+              >
+                <Card className="h-full bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-all">
+                  <CardHeader className="text-center">
+                    <div className="mx-auto mb-4">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl"></div>
+                        <div className="relative p-6 bg-primary/10 rounded-full border-2 border-primary">
+                          <step.icon className="h-12 w-12 text-primary" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-5xl text-primary mb-4">{step.step}</div>
+                    <CardTitle className="text-xl mb-2">{step.title}</CardTitle>
+                    <CardDescription>{step.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+                {index < processSteps.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-20">
+                    <ArrowRight className="h-8 w-8 text-primary" />
+                  </div>
+                )}
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -694,7 +701,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                 <div className="h-12 w-32 relative">
                   <img
                     src="/img/BANX-1_2x.png"
-                    alt="Logo Banx"
+                    alt="Logo Banx not Banks"
                     className="h-full w-full object-contain"
                   />
                 </div>
@@ -769,15 +776,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
                 <li className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
                   Política de Privacidad
                 </li>
-                <li className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                  Aviso de Privacidad
+                <li>
+                  <Link 
+                    to="/aviso-legal" 
+                    className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                  >
+                    Aviso de Privacidad
+                  </Link>
                 </li>
-                <li className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                  Regulaciones CNBV
-                </li>
-                <li className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                  UNE
-                </li>
+
               </ul>
             </div>
           </div>
@@ -785,10 +792,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartApplication }) 
           <Separator className="my-8" />
 
           <div className="text-center text-sm text-muted-foreground">
-            <p>© 2025 Créditos Banx. Todos los derechos reservados.</p>
-            <p className="mt-2">
-              Créditos Banx es una marca registrada. Autorizado y regulado por la CNBV.
-            </p>
+            <p>© 2025 Créditos Banx not Banks. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>

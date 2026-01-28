@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { sendLoanApplicationEmail } from '../utils/emailService';
 
 export interface LoanData {
   amount: number;
@@ -64,6 +65,7 @@ interface LoanContextType {
   setCurrentStep: (step: number) => void;
   setEvaluationResult: (result: ApplicationData['evaluationResult']) => void;
   resetApplication: () => void;
+  submitApplication: () => Promise<{ success: boolean; error?: string }>;
 }
 
 const LoanContext = createContext<LoanContextType | undefined>(undefined);
@@ -129,7 +131,92 @@ export const LoanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const resetApplication = () => {
     setApplicationData(initialState);
+    localStorage.removeItem('loanApplication');
   };
+
+  const submitApplication = useCallback(async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      // Validate required fields - matching the validation in App.tsx
+      const { personalInfo, prerequisiteInfo } = applicationData;
+      
+      // Validate personal info
+      if (!(
+        personalInfo.firstName &&
+        personalInfo.lastName &&
+        personalInfo.age &&
+        personalInfo.idNumber &&
+        personalInfo.maritalStatus &&
+        personalInfo.dependents !== undefined &&
+        personalInfo.email &&
+        personalInfo.phone
+      )) {
+        return { 
+          success: false, 
+          error: 'Por favor completa toda la información personal requerida' 
+        };
+      }
+      
+      // Validate prerequisite info
+      if (!(
+        prerequisiteInfo.rfc &&
+        prerequisiteInfo.ciec &&
+        prerequisiteInfo.creditType
+      )) {
+        return { 
+          success: false, 
+          error: 'Por favor completa toda la información fiscal requerida' 
+        };
+      }
+
+      // Prepare the data for the email
+      const emailData = {
+        personalInfo: {
+          firstName: applicationData.personalInfo.firstName || '',
+          lastName: applicationData.personalInfo.lastName || '',
+          email: applicationData.personalInfo.email || '',
+          phone: applicationData.personalInfo.phone || 'No proporcionado',
+          idNumber: applicationData.personalInfo.idNumber || 'No proporcionado',
+          age: applicationData.personalInfo.age || 0,
+          maritalStatus: applicationData.personalInfo.maritalStatus || 'No especificado',
+          dependents: applicationData.personalInfo.dependents || 0,
+        },
+        prerequisiteInfo: {
+          rfc: applicationData.prerequisiteInfo.rfc || 'No proporcionado',
+          ciec: applicationData.prerequisiteInfo.ciec || 'No proporcionada',
+          creditType: applicationData.prerequisiteInfo.creditType || 'No especificado',
+        },
+        financialInfo: {
+          monthlyIncome: applicationData.financialInfo.monthlyIncome || 0,
+          monthlyExpenses: applicationData.financialInfo.monthlyExpenses || 0,
+          assets: applicationData.financialInfo.assets || 0,
+          existingDebts: applicationData.financialInfo.existingDebts || 0,
+          creditScore: applicationData.financialInfo.creditScore || 0,
+        },
+        loanData: {
+          amount: applicationData.loanData.amount,
+          term: applicationData.loanData.term,
+          interestRate: applicationData.loanData.interestRate,
+        },
+      };
+
+      // Send the email
+      const result = await sendLoanApplicationEmail(emailData);
+      
+      if (result.success) {
+        // Only reset the application if email was sent successfully
+        resetApplication();
+        return { success: true };
+      } else {
+        return result;
+      }
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Error al procesar la solicitud' 
+      };
+    }
+  }, [applicationData]);
 
   return (
     <LoanContext.Provider
@@ -143,6 +230,7 @@ export const LoanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setCurrentStep,
         setEvaluationResult,
         resetApplication,
+        submitApplication,
       }}
     >
       {children}

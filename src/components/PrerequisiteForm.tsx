@@ -70,9 +70,9 @@ export const PrerequisiteForm: React.FC = () => {
   const selectedCredit = creditTypes.find(ct => ct.value === prerequisiteInfo.creditType);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-4">
       {/* Header */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-4">
         <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-full mb-4">
           <FileText className="h-8 w-8 text-primary" />
         </div>
@@ -89,51 +89,34 @@ export const PrerequisiteForm: React.FC = () => {
             <TrendingUp className="h-5 w-5 text-primary" />
             Tipo de Crédito
           </CardTitle>
-          <CardDescription>
-            Selecciona el tipo de crédito que deseas solicitar
-          </CardDescription>
+          <p className="text-sm text-muted-foreground">Selecciona el tipo de crédito</p>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="creditType">Producto Financiero *</Label>
-            <Select
-              value={prerequisiteInfo.creditType || ''}
-              onValueChange={(value) => handleChange('creditType', value)}
-            >
-              <SelectTrigger id="creditType" className="h-auto py-3">
-                <SelectValue placeholder="Selecciona un tipo de crédito" />
-              </SelectTrigger>
-              <SelectContent>
-                {creditTypes.map((credit) => (
-                  <SelectItem key={credit.value} value={credit.value} className="py-3">
-                    <div className="flex items-start gap-3">
-                      <credit.icon className={`h-5 w-5 mt-0.5 ${credit.color}`} />
-                      <div>
-                        <p className="font-medium">{credit.label}</p>
-                        <p className="text-sm text-muted-foreground">{credit.description}</p>
-                      </div>
+        <CardContent>
+          <Select
+            value={prerequisiteInfo.creditType || ''}
+            onValueChange={(value) => handleChange('creditType', value)}
+          >
+            <SelectTrigger className="h-auto py-3">
+              <SelectValue placeholder="Selecciona una opción" />
+            </SelectTrigger>
+            <SelectContent>
+              {creditTypes.map(({ value, label, icon: Icon, color, description }) => (
+                <SelectItem 
+                  key={value} 
+                  value={value} 
+                  className="py-3" style={{ backgroundColor: '#141414', cursor: 'pointer' }}
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon className={`h-5 w-5 mt-0.5 ${color}`} />
+                    <div>
+                      <p className="font-medium text-foreground">{label}</p>
+                      <p className="text-sm text-foreground">{description}</p>
                     </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Selected Credit Preview */}
-          {selectedCredit && (
-            <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-              <div className="flex items-start gap-3">
-                <selectedCredit.icon className={`h-6 w-6 ${selectedCredit.color}`} />
-                <div className="flex-1">
-                  <p className="font-medium mb-1">{selectedCredit.label}</p>
-                  <p className="text-sm text-muted-foreground">{selectedCredit.description}</p>
-                </div>
-                <Badge variant="outline" className="border-primary/30">
-                  Seleccionado
-                </Badge>
-              </div>
-            </div>
-          )}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </CardContent>
       </Card>
 
@@ -228,7 +211,7 @@ export const PrerequisiteForm: React.FC = () => {
           <ul className="space-y-1 ml-4 list-disc text-muted-foreground">
             <li>La información fiscal se utiliza exclusivamente para verificar el estatus activo ante el SAT</li>
             <li>Generamos una precalificación o calificación inicial basada en tus datos</li>
-            <li>Banx no realiza movimientos, declaraciones ni gestiones fiscales en tu nombre</li>
+            <li>Banx not Banks no realiza movimientos, declaraciones ni gestiones fiscales en tu nombre</li>
             <li>La información podrá ser compartida únicamente con los habilitadores de servicios necesarios para completar el proceso de evaluación y otorgamiento del crédito</li>
           </ul>
         </AlertDescription>
@@ -249,17 +232,7 @@ export const PrerequisiteForm: React.FC = () => {
       {/* Privacy Notice */}
       <Alert className="border-muted">
         <AlertCircle className="h-4 w-4" />
-        <AlertDescription className="text-xs">
-          Al continuar, aceptas nuestro{' '}
-          <a href="#" className="text-primary hover:underline">
-            Aviso de Privacidad
-          </a>{' '}
-          y{' '}
-          <a href="#" className="text-primary hover:underline">
-            Términos y Condiciones
-          </a>
-          . Tus datos están protegidos conforme a la Ley Federal de Protección de Datos Personales.
-        </AlertDescription>
+        <span className="text-xs">Al continuar, aceptas nuestro{' '}<a href="#" className="text-primary hover:underline">Aviso de Privacidad</a>{' '}y{' '}<a href="#" className="text-primary hover:underline">Términos y Condiciones</a>. <br/>Tus datos están protegidos conforme a la Ley Federal de Protección de Datos Personales.</span>
       </Alert>
     </div>
   );

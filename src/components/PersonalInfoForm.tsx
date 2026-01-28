@@ -11,11 +11,11 @@ export const PersonalInfoForm: React.FC = () => {
   const { personalInfo } = applicationData;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-4">
       {/* Header */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-4">
         <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-full mb-4">
-          <User className="h-8 w-8 text-primary" />
+          <User className="text-primary" />
         </div>
         <h2 className="text-3xl mb-2">Información Personal</h2>
         <p className="text-muted-foreground">

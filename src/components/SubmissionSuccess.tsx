@@ -76,45 +76,6 @@ export const SubmissionSuccess: React.FC = () => {
                 En Proceso
               </Badge>
             </div>
-
-            {/* Personal Info */}
-            <div className="space-y-3">
-              <h4 className="text-sm text-muted-foreground uppercase tracking-wider">
-                Solicitante
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Nombre Completo</p>
-                  <p className="font-medium">
-                    {personalInfo.firstName} {personalInfo.lastName}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">RFC</p>
-                  <p className="font-mono font-medium">{prerequisiteInfo.rfc}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">{personalInfo.email}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Teléfono</p>
-                  <p className="font-medium">{personalInfo.phone}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Credit Type */}
-            <div className="space-y-3 pt-4 border-t border-border">
-              <h4 className="text-sm text-muted-foreground uppercase tracking-wider">
-                Tipo de Crédito Solicitado
-              </h4>
-              <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
-                <p className="font-medium text-lg">
-                  {creditTypeLabels[prerequisiteInfo.creditType || ''] || prerequisiteInfo.creditType}
-                </p>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </motion.div>
@@ -184,7 +145,7 @@ export const SubmissionSuccess: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Email</p>
-                <p className="font-medium">creditos@banx.com</p>
+                <p className="font-medium">creditos@banxnotbanks.com</p>
               </div>
             </CardContent>
           </Card>
@@ -210,7 +171,7 @@ export const SubmissionSuccess: React.FC = () => {
         className="flex items-center justify-center gap-2 text-sm text-muted-foreground pt-4"
       >
         <Shield className="h-4 w-4 text-green-500" />
-        <span>Tus datos están protegidos con encriptación de nivel bancario</span>
+        <span>Tus datos están protegidos con encriptación</span>
       </motion.div>
     </div>
   );

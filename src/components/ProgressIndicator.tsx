@@ -17,7 +17,7 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   steps,
 }) => {
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-4">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>

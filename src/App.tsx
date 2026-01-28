@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { LoanProvider, useLoan } from './context/LoanContext';
 import { LandingPage } from './components/LandingPage';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { PersonalInfoForm } from './components/PersonalInfoForm';
 import { PrerequisiteForm } from './components/PrerequisiteForm';
 import { SubmissionSuccess } from './components/SubmissionSuccess';
-import { ChatBot } from './components/ChatBot';
+import { CallMeBack } from './components/CallMeBack';
 import { Button } from './components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './components/ui/sheet';
 import { Building2, ArrowRight, ArrowLeft, X } from 'lucide-react';
-import { Toaster, toast } from 'sonner@2.0.3';
+import { Toaster, toast } from 'sonner';
+import AvisoLegal from './components/AvisoLegal';
 
 const STEPS = [
   { id: 1, title: 'Información Personal', description: 'Datos básicos' },
@@ -18,7 +20,7 @@ const STEPS = [
 ];
 
 const AppContent: React.FC = () => {
-  const { applicationData, setCurrentStep, setEvaluationResult } = useLoan();
+  const { applicationData, setCurrentStep, setEvaluationResult, submitApplication } = useLoan();
   const { currentStep } = applicationData;
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -68,7 +70,7 @@ const AppContent: React.FC = () => {
     toast.info('Completa tu información personal para continuar');
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep === 1) {
       if (!validatePersonalInfo()) {
         toast.error('Por favor completa todos los campos requeridos');
@@ -81,8 +83,24 @@ const AppContent: React.FC = () => {
         toast.error('Por favor completa todos los campos requeridos');
         return;
       }
-      setCurrentStep(3);
-      toast.success('¡Solicitud enviada con éxito!');
+      
+      // Show loading state
+      const toastId = toast.loading('Enviando solicitud...');
+      
+      try {
+        // Submit the application and send email
+        const result = await submitApplication();
+        
+        if (result.success) {
+          toast.success('¡Solicitud enviada con éxito!', { id: toastId });
+          setCurrentStep(3);
+        } else {
+          toast.error(result.error || 'Error al enviar la solicitud', { id: toastId });
+        }
+      } catch (error) {
+        console.error('Error submitting application:', error);
+        toast.error('Ocurrió un error al procesar tu solicitud', { id: toastId });
+      }
     }
   };
 
@@ -92,7 +110,12 @@ const AppContent: React.FC = () => {
     }
   };
 
-  const handleCloseSheet = () => {
+  const handleCloseSheet = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (currentStep > 1) {
+      toast.warning('Guarda tu progreso antes de cerrar');
+      return;
+    }
     setIsSheetOpen(false);
   };
 
@@ -104,7 +127,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <Toaster position="top-right" richColors />
-      <ChatBot />
+      <CallMeBack />
 
       {/* Header with glassmorphism */}
       <header className="bg-card/80 border-b border-border backdrop-blur-md sticky top-0 z-50">
@@ -114,12 +137,12 @@ const AppContent: React.FC = () => {
               <div className="h-12 w-32 relative">
                 <img 
                   src="/img/BANX-1_2x.png" 
-                  alt="Logo Banx" 
+                  alt="Logo Banx not Banks" 
                   className="h-full w-full object-contain"
                 />
               </div>
-              <div>
-                <h1 className="text-2xl text-foreground">Créditos Banx</h1>
+              <div className="hidden md:block">
+                <h1 className="text-2xl text-foreground">Créditos Banx not Banks</h1>
                 <p className="text-sm text-muted-foreground">Tu socio financiero de confianza</p>
               </div>
             </div>
@@ -142,7 +165,7 @@ const AppContent: React.FC = () => {
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetContent 
           className="w-full sm:max-w-3xl lg:max-w-4xl overflow-y-auto"
-          onInteractOutside={(e) => {
+          onInteractOutside={(e: Event) => {
             // Prevent closing when clicking outside if there's unsaved data
             if (currentStep > 1) {
               e.preventDefault();
@@ -228,10 +251,24 @@ const AppContent: React.FC = () => {
   );
 };
 
+const AppWithRouter: React.FC = () => {
+  const location = useLocation();
+  const isAvisoLegal = location.pathname === '/aviso-legal';
+
+  return (
+    <LoanProvider>
+      {!isAvisoLegal && <AppContent />}
+      <Routes>
+        <Route path="/aviso-legal" element={<AvisoLegal />} />
+      </Routes>
+    </LoanProvider>
+  );
+};
+
 export default function App() {
   return (
     <LoanProvider>
-      <AppContent />
+      <AppWithRouter />
     </LoanProvider>
   );
 }
